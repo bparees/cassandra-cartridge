@@ -1,0 +1,11 @@
+#!/bin/bash -e
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+if [ -d "$OPENSHIFT_CASSANDRA_DIR" ]; then
+  tar -C $OPENSHIFT_CASSANDRA_DIR -xzvf $OPENSHIFT_CASSANDRA_DIR/usr/lib/apache-cassandra-1.2.6-bin.tar.gz
+fi
+sed -i 's/180k/4m/g' $CASSANDRA_CONF/cassandra-env.sh
+sed -i 's#/var/lib#'$OPENSHIFT_CASSANDRA_DIR'#g' $CASSANDRA_CONF/cassandra.yaml
+sed -i 's#/var/log#'$OPENSHIFT_CASSANDRA_DIR'#g' $CASSANDRA_CONF/log4j-server.properties
+sed -i 's#localhost#'$OPENSHIFT_CASSANDRA_IP'#g' $CASSANDRA_CONF/cassandra.yaml
+sed -i 's#"127.0.0.1"#'$OPENSHIFT_CASSANDRA_IP'#g' $CASSANDRA_CONF/cassandra.yaml
+echo "JVM_OPTS=\"\$JVM_OPTS -Djava.rmi.server.hostname=${OPENSHIFT_CASSANDRA_IP}\"" >> $CASSANDRA_CONF/cassandra-env.sh

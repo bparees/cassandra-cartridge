@@ -1,0 +1,9 @@
+<% isUsed=true -%>
+<% port=rand(65535) -%>
+<% while isUsed -%>
+<%   if `netstat -na | grep 0.0.0.0:#{port}`.to_s.empty? -%>
+<%     isUsed=false -%>
+<%   else port=rand(65535) -%>
+<%   end -%>
+<% end -%>
+<%= port %>

@@ -1,0 +1,68 @@
+#!/bin/bash -eu
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+set -x
+
+function is_running {
+  user=`whoami`
+  if ps -ef | grep java | grep cassandra; then
+    if netstat -na | grep ${OPENSHIFT_CASSANDRA_IP}; then
+      return 0
+    else
+      return 1
+    fi
+  else
+    return 1
+  fi
+}
+
+function status {
+  if is_running; then
+    echo "Cassandra is already running." 
+  else
+    echo "Cassandra is stopped."
+  fi
+}
+
+function start {
+  if is_running; then
+    echo "Cassandra is already running." 1>&2
+    return 0
+  else
+    $CASSANDRA_HOME/bin/cassandra -f &
+    sleep 2
+    if is_running; then
+      echo "Cassandra started successfully."
+    else
+      echo "Failed to start Cassandra."
+    fi
+  fi
+}
+
+function stop {
+  user=`whoami`
+  if ! is_running; then
+    echo "Cassandra is already stopped." 1>&2
+  else
+    echo "Shutting down Cassandra." 
+    pgrep -u $user -f 'cassandr[a]' | xargs kill -9 > /dev/null 2>&1 || break
+    sleep 1
+    if ! is_running; then
+      echo "Successfully shut down Cassandra."
+    fi
+  fi
+}
+
+function restart {
+  stop
+  start
+}
+
+case "$1" in
+  start)                start ;;
+  stop)                 stop ;;
+  restart | reload )    restart ;;
+  status)               status ;;
+  *)                    exit 0
+esac
+
+exit 0

@@ -1,0 +1,40 @@
+---
+Name: cassandra
+Cartridge-Short-Name: CASSANDRA
+Display-Name: Cassandra Cartridge 1.26
+Description: Apache Cassandra is a NoSQL Databaste
+Version: '1.26'
+Versions:
+- '1.26'
+License: ASL 2.0
+Vendor: Apache
+Cartridge-Version: 0.0.1
+Cartridge-Vendor: cisco
+Categories:
+- service
+- cassandra
+- embedded
+Provides:
+- apache-cassandra-1.26
+Cart-Data:
+- Key: CASSANDRA_HOME
+  Type: environment
+  Description: Directory of apache-cassandra
+- Key: CASSANDRA_CONF
+  Type: environment
+  Description: Cassandra configurations
+Publishes:
+Subscribes:
+  set-env:
+    Type: ENV:*
+    Required: false
+Endpoints:
+- Private-IP-Name: IP
+  Private-Port-Name: THRIFT_PORT
+  Private-Port: 9160
+- Private-IP-Name: IP
+  Private-Port-Name: CQL_PORT
+  Private-Port: 9042
+- Private-IP-Name: IP
+  Private-Port-Name: LISTEN_PORT
+  Private-Port: 7199 

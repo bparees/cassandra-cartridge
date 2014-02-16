@@ -1,0 +1,10 @@
+---
+locked_files:
+- bin/
+- bin/*
+- env/
+- env/OPENSHIFT_QPID_WORK_DIR
+- hooks/
+- hooks/*
+processed_templates:
+- '**/*.erb'

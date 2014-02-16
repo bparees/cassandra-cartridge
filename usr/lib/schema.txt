@@ -1,0 +1,148 @@
+drop column family slot;
+
+create column family slot
+    with comparator = 'UTF8Type'
+    and key_validation_class = 'UTF8Type'
+    and column_metadata = [
+        {
+            column_name : 'timestamp',
+            validation_class : 'LongType',
+            index_type: KEYS
+        },
+        {
+            column_name : 'nature',
+            validation_class : 'UTF8Type',
+            index_type: KEYS
+        },
+        {
+            column_name : 'registrar',
+            validation_class : 'UTF8Type',
+            index_type: KEYS
+        },
+        {
+            column_name : 'registrar_key',
+            validation_class : 'UTF8Type',
+            index_type: KEYS
+        },
+        {
+            column_name : 'owner',
+            validation_class : 'UTF8Type'
+        },
+        {
+            column_name : 'dominant',
+            validation_class : 'BooleanType'
+        },
+        {
+            column_name : 'read_binding',
+            validation_class : 'UTF8Type',
+            index_type: KEYS
+        },
+        {
+            column_name : 'read_binding_details',
+            validation_class : 'UTF8Type'
+        },
+        {
+            column_name : 'read_binding_satellite_id',
+            validation_class : 'UTF8Type',
+            index_type: KEYS
+        },
+        {
+            column_name : 'read_binding_satellite_address',
+            validation_class : 'UTF8Type'
+        },
+        {
+            column_name : 'write_binding',
+            validation_class : 'UTF8Type',
+            index_type: KEYS
+        },
+        {
+            column_name : 'write_binding_details',
+            validation_class : 'UTF8Type'
+        }
+        {
+            column_name : 'write_binding_satellite_id',
+            validation_class : 'UTF8Type',
+            index_type: KEYS
+        },
+        {
+            column_name : 'write_binding_satellite_address',
+            validation_class : 'UTF8Type'
+        }
+    ];
+
+drop column family device_goal;
+
+create column family device_goal
+    with comparator = 'UTF8Type'
+    and key_validation_class = 'UTF8Type'
+    and column_metadata = [
+        {
+            column_name : 'state',
+            validation_class : 'UTF8Type'
+        }
+    ];
+
+drop column family nugget;
+
+create column family nugget
+    with comparator = 'UTF8Type'
+    and key_validation_class = 'UTF8Type'
+    and column_metadata = [
+        {
+            column_name : 'state',
+            validation_class : 'UTF8Type'
+        }
+    ];
+
+drop column family device_last_synced;
+
+create column family device_last_synced;
+
+drop column family slot_directory_by_tags;
+drop column family slot_directory_by_slots;
+
+create column family slot_directory_by_tags
+    with comparator = 'UTF8Type'
+    and key_validation_class = 'UTF8Type'
+;
+
+create column family slot_directory_by_slots
+    with comparator = 'UTF8Type'
+    and key_validation_class = 'UTF8Type'
+;
+
+
+drop column family password_credentials;
+
+-- key contains the name of the owning principal
+create column family password_credentials
+    with comparator = 'UTF8Type'
+    and key_validation_class = 'UTF8Type'
+    and column_metadata = [
+        {
+            column_name : 'password',
+            validation_class : 'UTF8Type'
+        }
+    ];
+
+
+drop column family privileges_for_principal;
+
+-- Principal name is key, each Privilege is a column
+create column family privileges_for_principal
+    with comparator = 'UTF8Type'
+    and key_validation_class = 'UTF8Type'
+;
+
+drop column family satellite_writes;
+
+create column family satellite_writes
+    with comparator = 'UTF8Type'
+    and key_validation_class = 'UTF8Type'
+    and column_metadata = [
+        {
+            column_name : 'state',
+            validation_class : 'UTF8Type'
+        }
+    ];
+
